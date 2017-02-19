@@ -1,13 +1,16 @@
-import webtest
 
 import main
+import unittest
 
+class MainTest(unittest.TestCase):
+    
+    def setUp(self):
+        self.app = main.app.test_client()
 
-def test_get():
-    app = webtest.TestApp(main.app)
+    def test_hello_world(self):
+        rv = self.app.get('/get_author/ulysses')
+        assert rv.data == 'James Joyce'
 
-    response = app.get('/')
-
-    assert response.status_int == 200
-    assert response.body == 'Hello, World!'
+if __name__ == '__main__':
+    unittest.main()
 

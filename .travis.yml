@@ -1,7 +1,5 @@
-sudo: required
+sudo: false
 language: python
-python:
-  - "2.7"
 # Cache our Gcloud SDK between commands
 cache:
   directories:
@@ -10,10 +8,24 @@ env:
 # Make sure gcloud command is on our PATH and the App Engine SDK is in the Python path
 - GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install:
+- if [ ! -d "${GAE_PYTHONPATH}" ]; then
+    python scripts/fetch_gae_sdk.py $(dirname "${GAE_PYTHONPATH}");
+  fi    
 - openssl aes-256-cbc -K $encrypted_c4b82e37d806_key -iv $encrypted_c4b82e37d806_iv -in api-website-14eb33719b19.json.enc -out api-website-14eb33719b19.json -d
+- if [ ! -d ${HOME}/google-cloud-sdk ]; then
+     curl https://sdk.cloud.google.com | bash;
+  fi
+- mkdir -p lib
+- gcloud auth activate-service-account --key-file api-website-14eb33719b19.json
 install:
 # Set the correct project to deploy to
 - gcloud config set project api-website-159123
 - gcloud -q components update gae-python
+- pip install -r requirements.txt -t lib/
 script:
-- gcloud app deploy --project api-website-159123
+# Run the unit tests
+- python test_main.py
+# Deploy the app
+- gcloud -q preview app deploy app.yaml --promote
+# Run and end to end test
+- python e2e_test.py
