@@ -1,7 +1,7 @@
 language: python
 deploy:
   provider: gae
-  keyfile: api-website-14eb33719b19.json
+  keyfile: api-website-14eb33719b19.json.enc
   project: api-website-159123
 
 before_install:
