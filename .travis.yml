@@ -26,6 +26,6 @@ script:
 # Run the unit tests
 - python test_main.py
 # Deploy the app
-- gcloud -q preview app deploy app.yaml --promote
+- gcloud app deploy app.yaml --promote
 # Run and end to end test
 - python e2e_test.py
