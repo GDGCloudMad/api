@@ -6,4 +6,3 @@ threadsafe: true
 handlers:
 - url: /.*
   script: main.app
-
