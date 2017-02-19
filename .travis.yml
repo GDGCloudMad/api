@@ -3,5 +3,12 @@ deploy:
   provider: gae
   keyfile: api-website-14eb33719b19.json
   project: api-website-159123
+
 before_install:
 - openssl aes-256-cbc -K $encrypted_c4b82e37d806_key -iv $encrypted_c4b82e37d806_iv -in api-website-14eb33719b19.json.enc -out api-website-14eb33719b19.json -d
+
+install:
+- echo "No install requirements.txt"
+
+script:
+- python main_test.py
