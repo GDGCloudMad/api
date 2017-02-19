@@ -16,4 +16,4 @@ install:
 - gcloud config set project api-website-159123
 - gcloud -q components update gae-python
 script:
-- gcloud -q preview app deploy app.yaml --promote
+- gcloud app deploy
