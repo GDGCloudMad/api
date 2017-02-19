@@ -7,9 +7,11 @@ before_install:
 
 deploy:
   provider: gae
+  skip_cleanup: true
   keyfile: api-website-14eb33719b19.json
   project: api-website-159123
-  on: master
+  on:
+    branch: master
 
 install:
 - echo "No install requirements.txt"
