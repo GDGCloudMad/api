@@ -11,4 +11,4 @@ install:
 - echo "No install requirements.txt"
 
 script:
-- python main_test.py
+- echo "No testing main_test.py"
