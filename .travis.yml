@@ -15,6 +15,5 @@ deploy:
   skip_cleanup: true
   keyfile: api-website-14eb33719b19.json
   project: api-website-159123
-  on:
-    branch: master
-    
+  default: true
+  on: master
