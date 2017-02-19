@@ -21,7 +21,9 @@ install:
 # Set the correct project to deploy to
 - gcloud config set project api-website-159123
 - gcloud -q components update gae-python
-- gcloud components update app
+# - gcloud components update app
+- gcloud components update
+- gcloud components install app
 - pip install -r requirements.txt -t lib/
 script:
 # Run the unit tests
