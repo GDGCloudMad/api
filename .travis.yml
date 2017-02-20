@@ -16,7 +16,7 @@ before_install:
      curl https://sdk.cloud.google.com | bash;
   fi
 - mkdir -p lib
-- gcloud auth activate-service-account --key-file api-website-14eb33719b19.json
+#- gcloud auth activate-service-account --key-file api-website-14eb33719b19.json
 install:
 - gcloud config set project api-website-159123
 - gcloud -q components update gae-python
