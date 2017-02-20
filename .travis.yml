@@ -18,7 +18,6 @@ before_install:
 - mkdir -p lib
 - gcloud auth activate-service-account --key-file api-website-14eb33719b19.json
 install:
-- gcloud app create project api-website-159123
 - gcloud config set project api-website-159123
 - gcloud -q components update gae-python
 - pip install -r requirements.txt -t lib/
