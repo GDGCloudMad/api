@@ -16,7 +16,7 @@ before_install:
      curl https://sdk.cloud.google.com | bash;
   fi
 - mkdir -p lib
-#- gcloud auth activate-service-account --key-file api-website-14eb33719b19.json
+- gcloud auth activate-service-account --key-file api-website-14eb33719b19.json
 install:
 - gcloud app create project api-website-159123
 - gcloud config set project api-website-159123
@@ -24,13 +24,4 @@ install:
 - pip install -r requirements.txt -t lib/
 script:
 - echo "No Script to run"
-deploy:
-  provider: gae
-  skip_cleanup: true
-  keyfile: api-website-14eb33719b19.json
-  project: api-website-159123
-  defaults: true
-  on:
-    all_branches: true
-after_deploy:
-- python e2e_test.py
+- gcloud app deploy app.yaml --project api-website-159123
