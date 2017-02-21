@@ -14,7 +14,7 @@ before_install:
 - mkdir -p lib
 - gcloud auth activate-service-account --key-file api-website-14eb33719b19.json
 install:
-- gcloud config set compute/zone us-central1-b
+- gcloud config set compute/zone europe-west1-b
 - gcloud config set project api-website-159123
 - sudo gcloud components update
 #- gcloud -q components update gae-python
@@ -24,7 +24,7 @@ install:
 - pip install -r requirements.txt -t lib/
 script:
 - echo "No Script to run"
-- gcloud app create --project api-website-159123
+- gcloud app create --project api-website-159123 --region europe-west1-b
 - gcloud app deploy app.yaml --project api-website-159123
 #- gcloud app deploy app.yaml --project api-website-159123
 - python e2e_test.py
