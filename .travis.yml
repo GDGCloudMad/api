@@ -19,8 +19,10 @@ before_install:
 - gcloud auth activate-service-account --key-file api-website-14eb33719b19.json
 install:
 - gcloud config set project api-website-159123
-- gcloud -q components update gae-python
+- gcloud -q components install app-engine-python
+- gcloud -q components install app-engine-python-extras
+# - gcloud -q components update gae-python
 - pip install -r requirements.txt -t lib/
 script:
 - echo "No Script to run"
-- gcloud app deploy app.yaml --project api-website-159123
+- gcloud app deploy app.yaml --project api-website-159123 -v 20170221
