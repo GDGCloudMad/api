@@ -1,28 +1,27 @@
-sudo: required
+sudo: false
 language: python
 cache:
   directories:
-  - "$HOME/google-cloud-sdk/"
+  - "$HOME/gcloud/"
 env:
 # Make sure gcloud command is on our PATH and the App Engine SDK is in the Python path
-- GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
+- PATH=$PATH:$HOME/google-cloud-sdk/bin CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install:
-# Install Google App Engine Python SDK
-- if [ ! -d "${GAE_PYTHONPATH}" ]; then
-    python scripts/fetch_gae_sdk.py $(dirname "${GAE_PYTHONPATH}");
-  fi
 - openssl aes-256-cbc -K $encrypted_c4b82e37d806_key -iv $encrypted_c4b82e37d806_iv -in api-website-14eb33719b19.json.enc -out api-website-14eb33719b19.json -d
-- if [ ! -d ${HOME}/google-cloud-sdk ]; then
-     curl https://sdk.cloud.google.com | bash;
+- if [ ! -d $HOME/google-cloud-sdk ]; then  
+    curl https://sdk.cloud.google.com | bash;
   fi
 - mkdir -p lib
 - gcloud auth activate-service-account --key-file api-website-14eb33719b19.json
 install:
+- gcloud config set compute/zone us-central1-b
 - gcloud config set project api-website-159123
-- sudo gcloud -q components install app-engine-python
-- sudo gcloud -q components install app-engine-python-extras
+- gcloud -q components update gae-python
+#- sudo gcloud -q components install app-engine-python
+#- sudo gcloud -q components install app-engine-python-extras
 # - gcloud -q components update gae-python
 - pip install -r requirements.txt -t lib/
 script:
 - echo "No Script to run"
 - gcloud -q preview app deploy app.yaml --project api-website-159123
+- python e2e_test.py
