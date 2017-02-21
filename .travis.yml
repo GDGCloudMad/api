@@ -1,4 +1,4 @@
-sudo: false
+sudo: required
 language: python
 cache:
   directories:
@@ -16,6 +16,7 @@ before_install:
 install:
 - gcloud config set compute/zone us-central1-b
 - gcloud config set project api-website-159123
+- sudo gcloud components update
 #- gcloud -q components update gae-python
 - sudo gcloud -q components install app-engine-python
 - sudo gcloud -q components install app-engine-python-extras
